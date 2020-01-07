@@ -1,0 +1,32 @@
+server:
+  swagger:
+    display: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:20101/eureka/
+spring:
+  datasource: #以下数据库部分自行修改
+    url: jdbc:mysql://192.168.70.128:3306/fastdevelop?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 5523003
+  redis: #以下redis部分自行修改
+    host: 192.168.70.128
+    port: 6379
+    #       password: dh35hebsd87ed9df9d0kemd9
+    database: 0
+
+com:
+  msh:
+    frame:
+      common:
+        logMethodStart: "*"
+logging:
+  level:
+    root: error
+    com:
+      msh: info
+      shihu: 
+        artascope: 
+          sys: 
+            sys: info

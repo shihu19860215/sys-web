@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msh.artascope.sys.service.dao.TenantDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.msh.artascope.sys.client.po.TenantPO" id="tenantMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="primaryUserId" column="primary_user_id"/>
+        <result property="status" column="status"/>
+        <result property="tenantStartTime" column="tenant_start_time"/>
+        <result property="tenantEndTime" column="tenant_end_time"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="updateVersion" column="update_version"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,name,primary_user_id,status,tenant_start_time,tenant_end_time,operator_id,update_version,create_time,update_time
+    </sql>
+
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="name != null">AND name = #{name}</if>
+            <if test="primaryUserId != null">AND primary_user_id = #{primaryUserId}</if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="tenantStartTime != null">AND tenant_start_time = #{tenantStartTime}</if>
+            <if test="tenantEndTime != null">AND tenant_end_time = #{tenantEndTime}</if>
+            <if test="operatorId != null">AND operator_id = #{operatorId}</if>
+            <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
+        </trim>
+    </sql>
+
+    <select id="get" resultMap="tenantMap" parameterType="com.msh.artascope.sys.client.qo.TenantQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_tenant where id = #{id}
+    </select>
+
+    <select id="list" resultMap="tenantMap"
+            parameterType="com.msh.artascope.sys.client.qo.TenantQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_tenant
+        <include refid="base_where"/>
+        <if test="sortBy != null and sortBy.length != 0" >
+            <trim prefix="ORDER BY" suffixOverrides=",">
+                <foreach collection="sortBy" item="item" index="index" separator=",">
+                    ${item.sortColumn} ${item.sortMode}
+                </foreach>
+            </trim>
+        </if>
+        limit #{firstRow},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.msh.artascope.sys.client.qo.TenantQO">
+        select count(id) from sys_tenant
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="insert" parameterType="com.msh.artascope.sys.client.po.TenantPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_tenant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="primaryUserId != null">primary_user_id,</if>
+            <if test="status != null">status,</if>
+            <if test="tenantStartTime != null">tenant_start_time,</if>
+            <if test="tenantEndTime != null">tenant_end_time,</if>
+            <if test="operatorId != null">operator_id,</if>
+            update_version,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="primaryUserId != null">#{primaryUserId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="tenantStartTime != null">#{tenantStartTime},</if>
+            <if test="tenantEndTime != null">#{tenantEndTime},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            1,
+        </trim>
+    </insert>
+
+    <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.TenantPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_tenant
+        (id,name,primary_user_id,status,tenant_start_time,tenant_end_time,operator_id,update_version)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id},#{item.name},#{item.primaryUserId},#{item.status},#{item.tenantStartTime},#{item.tenantEndTime},#{item.operatorId},1)
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.msh.artascope.sys.client.po.TenantPO">
+        update sys_tenant
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="primaryUserId != null">
+                primary_user_id = #{primaryUserId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="tenantStartTime != null">
+                tenant_start_time = #{tenantStartTime},
+            </if>
+            <if test="tenantEndTime != null">
+                tenant_end_time = #{tenantEndTime},
+            </if>
+            <if test="operatorId != null">
+                operator_id = #{operatorId},
+            </if>
+             update_version = update_version+1,
+        </set>
+        where id = #{id}
+        and update_version = #{updateVersion}
+    </update>
+
+    <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.TenantQO">
+        delete from sys_tenant where id = #{id}
+    </delete>
+    <delete id="logicDelete" parameterType="com.msh.artascope.sys.client.qo.TenantQO">
+        update sys_tenant set status = -1 where id = #{id}
+    </delete>
+</mapper>

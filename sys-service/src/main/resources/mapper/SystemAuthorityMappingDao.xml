@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msh.artascope.sys.service.dao.SystemAuthorityMappingDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.msh.artascope.sys.client.po.SystemAuthorityMappingPO" id="systemAuthorityMappingMap">
+        <result property="id" column="id"/>
+        <result property="systemId" column="system_Id"/>
+        <result property="authorityId" column="authority_id"/>
+        <result property="status" column="status"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="updateVersion" column="update_version"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,system_Id,authority_id,status,operator_id,update_version,create_time,update_time
+    </sql>
+
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="systemId != null">AND system_Id = #{systemId}</if>
+            <if test="authorityId != null">AND authority_id = #{authorityId}</if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="operatorId != null">AND operator_id = #{operatorId}</if>
+            <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
+        </trim>
+    </sql>
+
+    <select id="get" resultMap="systemAuthorityMappingMap" parameterType="com.msh.artascope.sys.client.qo.SystemAuthorityMappingQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_system_authority_mapping where id = #{id}
+    </select>
+
+    <select id="list" resultMap="systemAuthorityMappingMap"
+            parameterType="com.msh.artascope.sys.client.qo.SystemAuthorityMappingQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_system_authority_mapping
+        <include refid="base_where"/>
+        <if test="sortBy != null and sortBy.length != 0" >
+            <trim prefix="ORDER BY" suffixOverrides=",">
+                <foreach collection="sortBy" item="item" index="index" separator=",">
+                    ${item.sortColumn} ${item.sortMode}
+                </foreach>
+            </trim>
+        </if>
+        limit #{firstRow},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.msh.artascope.sys.client.qo.SystemAuthorityMappingQO">
+        select count(id) from sys_system_authority_mapping
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="insert" parameterType="com.msh.artascope.sys.client.po.SystemAuthorityMappingPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_system_authority_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="systemId != null">system_Id,</if>
+            <if test="authorityId != null">authority_id,</if>
+            <if test="status != null">status,</if>
+            <if test="operatorId != null">operator_id,</if>
+            update_version,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="systemId != null">#{systemId},</if>
+            <if test="authorityId != null">#{authorityId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            1,
+        </trim>
+    </insert>
+
+    <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.SystemAuthorityMappingPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_system_authority_mapping
+        (id,system_Id,authority_id,status,operator_id,update_version)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id},#{item.systemId},#{item.authorityId},#{item.status},#{item.operatorId},1)
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.msh.artascope.sys.client.po.SystemAuthorityMappingPO">
+        update sys_system_authority_mapping
+        <set>
+            <if test="systemId != null">
+                system_Id = #{systemId},
+            </if>
+            <if test="authorityId != null">
+                authority_id = #{authorityId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="operatorId != null">
+                operator_id = #{operatorId},
+            </if>
+             update_version = update_version+1,
+        </set>
+        where id = #{id}
+        and update_version = #{updateVersion}
+    </update>
+
+    <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.SystemAuthorityMappingQO">
+        delete from sys_system_authority_mapping where id = #{id}
+    </delete>
+    <delete id="logicDelete" parameterType="com.msh.artascope.sys.client.qo.SystemAuthorityMappingQO">
+        update sys_system_authority_mapping set status = -1 where id = #{id}
+    </delete>
+</mapper>
