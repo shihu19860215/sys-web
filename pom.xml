@@ -7,24 +7,23 @@
     <groupId>com.msh.artascope</groupId>
     <artifactId>sys-server</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>./sys-client</module>
         <module>./sys-service</module>
         <module>./sys-web</module>
     </modules>
 
-    <!-- Spring Boot 启动父依赖 -->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>
+        <groupId>com.msh</groupId>
+        <artifactId>msh-frame</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <msh.frame.version>1.0.0</msh.frame.version>
-        <msh.starter.version>1.0.0</msh.starter.version>
-        <sys.version>1.0.0</sys.version>
+        <sys.version>${project.version}</sys.version>
+        <msh.frame.version>${parent.version}</msh.frame.version>
+        <msh.starter.version>1.0.0-SNAPSHOT</msh.starter.version>
         <fastjson.version>1.2.47</fastjson.version>
         <lombok.version>1.16.18</lombok.version>
         <servlet.version>4.0.0-b05</servlet.version>
@@ -171,4 +170,18 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <name>Release Repository</name>
+            <url>${ReleaseRepository}</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot</id>
+            <name>Snapshot Repository</name>
+            <url>${SnapshotRepository}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
