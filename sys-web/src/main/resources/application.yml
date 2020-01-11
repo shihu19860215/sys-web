@@ -39,7 +39,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   servlet:
     multipart:
-      max-file-size: 5Mb
-      max-request-size: 10Mb
+      max-file-size: 5MB
+      max-request-size: 10MB
 mybatis:
   mapperLocations: classpath:mapper/**/*.xml

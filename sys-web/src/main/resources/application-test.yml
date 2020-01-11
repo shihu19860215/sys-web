@@ -25,7 +25,7 @@ logging:
   level:
     root: info
     com:
-      msh: debug
+      msh: info
       shihu: 
         artascope: 
           sys: 
