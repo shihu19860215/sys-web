@@ -34,7 +34,7 @@
             <if test="tenantId != null">AND tenant_id = #{tenantId}</if>
             <if test="operatorId != null">AND operator_id = #{operatorId}</if>
             <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
-            <if test="egtStatus != null">AND id != #{neqId}</if>
+            <if test="neqId != null">AND id != #{neqId}</if>
         </trim>
     </sql>
 

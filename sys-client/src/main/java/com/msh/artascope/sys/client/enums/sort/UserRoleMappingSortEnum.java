@@ -3,12 +3,13 @@ package com.msh.artascope.sys.client.enums.sort;
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 18:01:23
+ * @date 2020-01-09 17:21:47
  */
 public enum  UserRoleMappingSortEnum {
     ID("id","主键id"),
     USER_ID("user_id","用户id"),
     ROLE_ID("role_id","角色id"),
+    SYSTEM_ID("system_id","系统id"),
     STATUS("status","状态"),
     TENANT_ID("tenant_id","租户id"),
     OPERATOR_ID("operator_id","操作人"),

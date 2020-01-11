@@ -1,6 +1,7 @@
 package com.msh.artascope.sys.web.api;
 
 import com.msh.frame.client.common.CommonResult;
+import com.msh.frame.client.validation.*;
 import com.msh.frame.web.base.BaseController;
 import com.msh.frame.web.util.HttpServletRequestUtil;
 import com.msh.artascope.sys.client.po.SystemAuthorityMappingPO;
@@ -10,17 +11,19 @@ import com.msh.artascope.sys.service.service.SystemAuthorityMappingService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Api(description = "系统权限映射-api相关接口")
 @Slf4j
@@ -34,7 +37,7 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
 
     @ApiOperation(value = "通用插入逻辑", httpMethod = "POST", notes = "通用插入逻辑")
     @PostMapping("insert")
-    public CommonResult insert(@RequestBody SystemAuthorityMappingPO p) {
+    public CommonResult insert(@Validated({IInsert.class,Default.class}) @RequestBody SystemAuthorityMappingPO p) {
         Long userId = HttpServletRequestUtil.getUserId();
         p.setOperatorId(userId);
         return systemAuthorityMappingService.insert(p);
@@ -60,7 +63,7 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
 
     @ApiOperation(value = "通用更新逻辑", httpMethod = "POST", notes = "通用更新逻辑")
     @PostMapping("update")
-    public CommonResult update(@RequestBody SystemAuthorityMappingPO p) {
+    public CommonResult update(@Validated({IUpdate.class,Default.class}) @RequestBody SystemAuthorityMappingPO p) {
         Long userId = HttpServletRequestUtil.getUserId();
         p.setOperatorId(userId);
         return systemAuthorityMappingService.update(p);
@@ -77,7 +80,7 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
 
     @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
     @GetMapping("list")
-    public CommonResult<List<SystemAuthorityMappingPO>> list(SystemAuthorityMappingQO q) {
+    public CommonResult<List<SystemAuthorityMappingPO>> list(@Validated({IList.class}) SystemAuthorityMappingQO q) {
         CommonResult<List<SystemAuthorityMappingPO>> query = systemAuthorityMappingService.list(q);
         return query;
     }
@@ -85,7 +88,7 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
 
     @ApiOperation(value = "vo列表查询", httpMethod = "GET", notes = "vo列表查询")
     @GetMapping("listvo")
-    public CommonResult<List<SystemAuthorityMappingVO>> listSystemAuthorityMappingVO(@ModelAttribute("pojo")SystemAuthorityMappingQO q) {
+    public CommonResult<List<SystemAuthorityMappingVO>> listSystemAuthorityMappingVO(@Validated({IList.class}) @ModelAttribute("pojo")SystemAuthorityMappingQO q) {
         return systemAuthorityMappingService.listSystemAuthorityMappingVO(q);
     }
 }

@@ -1,6 +1,7 @@
 package com.msh.artascope.sys.web.api;
 
 import com.msh.frame.client.common.CommonResult;
+import com.msh.frame.client.validation.*;
 import com.msh.frame.web.base.BaseController;
 import com.msh.frame.web.util.HttpServletRequestUtil;
 import com.msh.artascope.sys.client.po.AuditPO;
@@ -10,17 +11,19 @@ import com.msh.artascope.sys.service.service.AuditService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Api(description = "审计列表-api相关接口")
 @Slf4j
@@ -34,7 +37,7 @@ public class AuditApi extends BaseController<AuditPO, AuditQO> {
 
     @ApiOperation(value = "通用插入逻辑", httpMethod = "POST", notes = "通用插入逻辑")
     @PostMapping("insert")
-    public CommonResult insert(@RequestBody AuditPO p) {
+    public CommonResult insert(@Validated({IInsert.class,Default.class}) @RequestBody AuditPO p) {
         Long tenantId = HttpServletRequestUtil.getTenantId();
         p.setTenantId(tenantId);
         Long userId = HttpServletRequestUtil.getUserId();
@@ -66,7 +69,7 @@ public class AuditApi extends BaseController<AuditPO, AuditQO> {
 
     @ApiOperation(value = "通用更新逻辑", httpMethod = "POST", notes = "通用更新逻辑")
     @PostMapping("update")
-    public CommonResult update(@RequestBody AuditPO p) {
+    public CommonResult update(@Validated({IUpdate.class,Default.class}) @RequestBody AuditPO p) {
         Long tenantId = HttpServletRequestUtil.getTenantId();
         p.setTenantId(tenantId);
         Long userId = HttpServletRequestUtil.getUserId();
@@ -87,7 +90,7 @@ public class AuditApi extends BaseController<AuditPO, AuditQO> {
 
     @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
     @GetMapping("list")
-    public CommonResult<List<AuditPO>> list(AuditQO q) {
+    public CommonResult<List<AuditPO>> list(@Validated({IList.class}) AuditQO q) {
         Long tenantId = HttpServletRequestUtil.getTenantId();
         q.setTenantId(tenantId);
         CommonResult<List<AuditPO>> query = auditService.list(q);
@@ -97,7 +100,7 @@ public class AuditApi extends BaseController<AuditPO, AuditQO> {
 
     @ApiOperation(value = "vo列表查询", httpMethod = "GET", notes = "vo列表查询")
     @GetMapping("listvo")
-    public CommonResult<List<AuditVO>> listAuditVO(@ModelAttribute("pojo")AuditQO q) {
+    public CommonResult<List<AuditVO>> listAuditVO(@Validated({IList.class}) AuditQO q) {
         Long tenantId = HttpServletRequestUtil.getTenantId();
         q.setTenantId(tenantId);
         return auditService.listAuditVO(q);

@@ -3,7 +3,7 @@ package com.msh.artascope.sys.client.enums.sort;
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 18:01:23
+ * @date 2020-01-09 17:21:47
  */
 public enum  ColumnDictSortEnum {
     ID("id","主键id"),

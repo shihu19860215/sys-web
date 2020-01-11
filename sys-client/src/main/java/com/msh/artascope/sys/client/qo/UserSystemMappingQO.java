@@ -2,21 +2,24 @@ package com.msh.artascope.sys.client.qo;
 
 import java.util.Date;
 import com.msh.frame.client.base.BaseQO;
+import com.msh.frame.client.validation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@ApiModel("用户系统映射")
+@ApiModel("用户系统映射QO")
 public class UserSystemMappingQO extends BaseQO {
 	@ApiModelProperty("用户id")
 	private Long userId;
@@ -24,6 +27,7 @@ public class UserSystemMappingQO extends BaseQO {
 	@ApiModelProperty("系统id")
 	private Long systemId;
 
+    @NotNull(message = "tenantId不能为空")
 	@ApiModelProperty("租户id")
 	private Long tenantId;
 

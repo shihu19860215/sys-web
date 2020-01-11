@@ -103,14 +103,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserPO,UserQO> implements U
 
     @Override
     public CommonResult<List<UserVO>> listUserVONoPrimary(UserQO param) {
-        Long tenantId = param.getTenantId();
-        if(null != tenantId){
-            TenantQO tenantQO = new TenantQO();
-            tenantQO.setId(tenantId);
-            TenantPO tenantPO = tenantService.get(tenantQO).getResult();
-            if(null != tenantPO){
-                param.setNeqId(tenantPO.getPrimaryUserId());
-            }
+    Long tenantId = param.getTenantId();
+        TenantQO tenantQO = new TenantQO();
+        tenantQO.setId(tenantId);
+        TenantPO tenantPO = tenantService.get(tenantQO).getResult();
+        if(null != tenantPO){
+            param.setNeqId(tenantPO.getPrimaryUserId());
         }
         return this.listUserVO(param);
     }
@@ -135,6 +133,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserPO,UserQO> implements U
         if(!CollectionUtils.isEmpty(userVOList)){
             Set<Long> userIdSet = userVOList.stream().map(v->v.getId()).collect(Collectors.toSet());
             UserRoleMappingQO userRoleMappingQO = new UserRoleMappingQO();
+            userRoleMappingQO.setPageSize(Integer.MAX_VALUE);
             userRoleMappingQO.setTenantId(param.getTenantId());
             userRoleMappingQO.setInUserIds(userIdSet);
             userRoleMappingQO.setSystemId(param.getSystemId());
@@ -294,6 +293,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserPO,UserQO> implements U
             }
             systemId = userSystemMappingPO.getSystemId();
             userInfo.setSystemId(systemId);
+            userSystemCache.put(userId, systemId);
+            return;
+        }
+        //如果是超级管理员 获取所有权限
+        if(UserInfoTypeEnum.SUPER_ADMIN.getCode().equals(userInfo.getType())){
+            userInfo.setSystemId(1L);
             userSystemCache.put(userId, systemId);
             return;
         }

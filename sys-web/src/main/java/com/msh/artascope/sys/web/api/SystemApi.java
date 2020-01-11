@@ -1,6 +1,7 @@
 package com.msh.artascope.sys.web.api;
 
 import com.msh.frame.client.common.CommonResult;
+import com.msh.frame.client.validation.*;
 import com.msh.frame.web.base.BaseController;
 import com.msh.frame.web.util.HttpServletRequestUtil;
 import com.msh.artascope.sys.client.po.SystemPO;
@@ -10,17 +11,19 @@ import com.msh.artascope.sys.service.service.SystemService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Api(description = "系统信息-api相关接口")
 @Slf4j
@@ -34,7 +37,7 @@ public class SystemApi extends BaseController<SystemPO, SystemQO> {
 
     @ApiOperation(value = "通用插入逻辑", httpMethod = "POST", notes = "通用插入逻辑")
     @PostMapping("insert")
-    public CommonResult insert(@RequestBody SystemPO p) {
+    public CommonResult insert(@Validated({IInsert.class,Default.class}) @RequestBody SystemPO p) {
         Long userId = HttpServletRequestUtil.getUserId();
         p.setOperatorId(userId);
         return systemService.insert(p);
@@ -60,7 +63,7 @@ public class SystemApi extends BaseController<SystemPO, SystemQO> {
 
     @ApiOperation(value = "通用更新逻辑", httpMethod = "POST", notes = "通用更新逻辑")
     @PostMapping("update")
-    public CommonResult update(@RequestBody SystemPO p) {
+    public CommonResult update(@Validated({IUpdate.class,Default.class}) @RequestBody SystemPO p) {
         Long userId = HttpServletRequestUtil.getUserId();
         p.setOperatorId(userId);
         return systemService.update(p);
@@ -77,7 +80,7 @@ public class SystemApi extends BaseController<SystemPO, SystemQO> {
 
     @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
     @GetMapping("list")
-    public CommonResult<List<SystemPO>> list(SystemQO q) {
+    public CommonResult<List<SystemPO>> list(@Validated({IList.class}) SystemQO q) {
         CommonResult<List<SystemPO>> query = systemService.list(q);
         return query;
     }
@@ -85,7 +88,7 @@ public class SystemApi extends BaseController<SystemPO, SystemQO> {
 
     @ApiOperation(value = "vo列表查询", httpMethod = "GET", notes = "vo列表查询")
     @GetMapping("listvo")
-    public CommonResult<List<SystemVO>> listSystemVO(@ModelAttribute("pojo")SystemQO q) {
+    public CommonResult<List<SystemVO>> listSystemVO(@Validated({IList.class}) @ModelAttribute("pojo")SystemQO q) {
         return systemService.listSystemVO(q);
     }
 }

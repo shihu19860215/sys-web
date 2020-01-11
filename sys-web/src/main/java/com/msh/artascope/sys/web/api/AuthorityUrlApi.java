@@ -1,7 +1,9 @@
 package com.msh.artascope.sys.web.api;
 
 import com.msh.frame.client.common.CommonResult;
+import com.msh.frame.client.validation.*;
 import com.msh.frame.web.base.BaseController;
+import com.msh.frame.web.util.HttpServletRequestUtil;
 import com.msh.artascope.sys.client.po.AuthorityUrlPO;
 import com.msh.artascope.sys.client.qo.AuthorityUrlQO;
 import com.msh.artascope.sys.client.vo.AuthorityUrlVO;
@@ -9,17 +11,19 @@ import com.msh.artascope.sys.service.service.AuthorityUrlService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Api(description = "权限url-api相关接口")
 @Slf4j
@@ -33,7 +37,7 @@ public class AuthorityUrlApi extends BaseController<AuthorityUrlPO, AuthorityUrl
 
     @ApiOperation(value = "通用插入逻辑", httpMethod = "POST", notes = "通用插入逻辑")
     @PostMapping("insert")
-    public CommonResult insert(@RequestBody AuthorityUrlPO p) {
+    public CommonResult insert(@Validated({IInsert.class,Default.class}) @RequestBody AuthorityUrlPO p) {
         return authorityUrlService.insert(p);
     }
 
@@ -55,7 +59,7 @@ public class AuthorityUrlApi extends BaseController<AuthorityUrlPO, AuthorityUrl
 
     @ApiOperation(value = "通用更新逻辑", httpMethod = "POST", notes = "通用更新逻辑")
     @PostMapping("update")
-    public CommonResult update(@RequestBody AuthorityUrlPO p) {
+    public CommonResult update(@Validated({IUpdate.class,Default.class}) @RequestBody AuthorityUrlPO p) {
         return authorityUrlService.update(p);
     }
 
@@ -70,7 +74,7 @@ public class AuthorityUrlApi extends BaseController<AuthorityUrlPO, AuthorityUrl
 
     @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
     @GetMapping("list")
-    public CommonResult<List<AuthorityUrlPO>> list(AuthorityUrlQO q) {
+    public CommonResult<List<AuthorityUrlPO>> list(@Validated({IList.class}) AuthorityUrlQO q) {
         CommonResult<List<AuthorityUrlPO>> query = authorityUrlService.list(q);
         return query;
     }
@@ -78,7 +82,7 @@ public class AuthorityUrlApi extends BaseController<AuthorityUrlPO, AuthorityUrl
 
     @ApiOperation(value = "vo列表查询", httpMethod = "GET", notes = "vo列表查询")
     @GetMapping("listvo")
-    public CommonResult<List<AuthorityUrlVO>> listAuthorityUrlVO(@ModelAttribute("pojo")AuthorityUrlQO q) {
+    public CommonResult<List<AuthorityUrlVO>> listAuthorityUrlVO(@Validated({IList.class}) @ModelAttribute("pojo")AuthorityUrlQO q) {
         return authorityUrlService.listAuthorityUrlVO(q);
     }
 }

@@ -2,9 +2,10 @@ package com.msh.artascope.sys.client.vo;
 
 import com.msh.artascope.sys.client.po.ColumnDictPO;
 import com.msh.artascope.sys.client.po.ColumnInfoPO;
-
+import java.util.Date;
 import java.util.List;
 
+import com.msh.frame.client.base.BaseQO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +15,7 @@ import lombok.ToString;
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-06 11:11:34
+ * @date 2020-01-09 17:21:47
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50646
 File Encoding         : 65001
 
-Date: 2020-01-07 19:06:27
+Date: 2020-01-11 11:22:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3790,7 +3790,7 @@ CREATE TABLE `sys_system` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2001060175317921001 DEFAULT CHARSET=utf8 COMMENT='系统信息';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统信息';
 
 -- ----------------------------
 -- Records of sys_system
@@ -3812,7 +3812,7 @@ CREATE TABLE `sys_system_authority_mapping` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='系统权限映射';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='系统权限映射';
 
 -- ----------------------------
 -- Records of sys_system_authority_mapping
@@ -3855,7 +3855,7 @@ CREATE TABLE `sys_tenant` (
 -- ----------------------------
 -- Records of sys_tenant
 -- ----------------------------
-INSERT INTO `sys_tenant` VALUES ('1', '测试租户', '2', '100', '2020-01-01 16:58:25', '2130-01-04 16:58:38', '0', '1', '2020-01-04 08:58:48', '2020-01-07 07:18:18');
+INSERT INTO `sys_tenant` VALUES ('1', '超级租户', '1', '100', '2020-01-01 16:58:25', '2130-01-04 16:58:38', '0', '1', '2020-01-04 08:58:48', '2020-01-11 03:21:26');
 
 -- ----------------------------
 -- Table structure for `sys_tenant_system_mapping`
