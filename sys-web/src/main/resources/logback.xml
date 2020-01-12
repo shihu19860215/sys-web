@@ -2,7 +2,7 @@
 
 <configuration debug="false">
     <!--日志存放目录 -->
-    <property name="LOG_PATH" value="/data/java/artascope-sys-web"/>
+    <property name="LOG_PATH" value="/data/java_log/artascope-sys-web"/>
     <!--日志存储时间-->
     <property name="MAX_HISTORY" value="3"/>
     <!--单个LOG文件最大SIZE-->
