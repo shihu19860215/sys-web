@@ -2,7 +2,7 @@
 
 <configuration debug="false">
     <!--日志存放目录 -->
-    <property name="LOG_PATH" value="/data/java_log/artascope-sys-web"/>
+    <property name="LOG_PATH" value="/data/java/artascope-sys-web"/>
     <!--日志存储时间-->
     <property name="MAX_HISTORY" value="3"/>
     <!--单个LOG文件最大SIZE-->
@@ -19,7 +19,7 @@
     <property name="PROFILE_ENV" value="@env@"/>
 
     <!--配置日志的格式-->
-    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} | %class | %line | %p | %msg%n"/>
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} | %p | %msg%n"/>
     <!--输出日志到控制台-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
