@@ -41,9 +41,6 @@ public class RoleAuthorityMappingServiceImpl extends BaseServiceImpl<RoleAuthori
 
     @Override
     public CommonResult<List<RoleAuthorityMappingPO>> list(RoleAuthorityMappingQO param) {
-        if(null == param.getStatus()){
-            param.setEgtStatus(0);
-        }
         return super.list(param);
     }
 

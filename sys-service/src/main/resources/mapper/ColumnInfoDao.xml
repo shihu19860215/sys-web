@@ -10,13 +10,10 @@
         <result property="columnName" column="column_name"/>
         <result property="title" column="title"/>
         <result property="status" column="status"/>
-        <result property="updateVersion" column="update_version"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="base_column_list">
-        id,table_name,column_name,title,status,update_version,create_time,update_time
+        id,table_name,column_name,title,status
     </sql>
 
 
@@ -66,7 +63,6 @@
             <if test="columnName != null">column_name,</if>
             <if test="title != null">title,</if>
             <if test="status != null">status,</if>
-            update_version,
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -74,39 +70,19 @@
             <if test="columnName != null">#{columnName},</if>
             <if test="title != null">#{title},</if>
             <if test="status != null">#{status},</if>
-            1,
         </trim>
     </insert>
 
     <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.ColumnInfoPO" useGeneratedKeys="true" keyProperty="id">
         insert into sys_column_info
-        (id,table_name,column_name,title,status,update_version)
+        (id,table_name,column_name,title,status)
         values
         <foreach collection="list" index="index" separator="," item="item">
-            (#{item.id},#{item.tableName},#{item.columnName},#{item.title},#{item.status},1)
+            (#{item.id},#{item.tableName},#{item.columnName},#{item.title},#{item.status})
         </foreach>
     </insert>
 
-    <update id="update" parameterType="com.msh.artascope.sys.client.po.ColumnInfoPO">
-        update sys_column_info
-        <set>
-            <if test="tableName != null">
-                table_name = #{tableName},
-            </if>
-            <if test="columnName != null">
-                column_name = #{columnName},
-            </if>
-            <if test="title != null">
-                title = #{title},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-             update_version = update_version+1,
-        </set>
-        where id = #{id}
-        and update_version = #{updateVersion}
-    </update>
+
 
     <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
         delete from sys_column_info where id = #{id}

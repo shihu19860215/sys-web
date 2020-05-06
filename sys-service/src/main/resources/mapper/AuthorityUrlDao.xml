@@ -11,12 +11,10 @@
         <result property="linkAuth" column="link_auth"/>
         <result property="status" column="status"/>
         <result property="updateVersion" column="update_version"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="base_column_list">
-        id,authority_id,url,link_auth,status,update_version,create_time,update_time
+        id,authority_id,url,link_auth,status,update_version
     </sql>
 
 
@@ -66,7 +64,7 @@
             <if test="url != null">url,</if>
             <if test="linkAuth != null">link_auth,</if>
             <if test="status != null">status,</if>
-            update_version,
+            <if test="updateVersion != null">update_version,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -74,7 +72,7 @@
             <if test="url != null">#{url},</if>
             <if test="linkAuth != null">#{linkAuth},</if>
             <if test="status != null">#{status},</if>
-            1,
+            <if test="updateVersion != null">#{updateVersion},</if>
         </trim>
     </insert>
 
@@ -83,7 +81,7 @@
         (id,authority_id,url,link_auth,status,update_version)
         values
         <foreach collection="list" index="index" separator="," item="item">
-            (#{item.id},#{item.authorityId},#{item.url},#{item.linkAuth},#{item.status},1)
+            (#{item.id},#{item.authorityId},#{item.url},#{item.linkAuth},#{item.status},#{item.updateVersion})
         </foreach>
     </insert>
 
@@ -104,9 +102,9 @@
             </if>
              update_version = update_version+1,
         </set>
-        where id = #{id}
-        and update_version = #{updateVersion}
+        where id = #{id} and update_version = #{updateVersion}
     </update>
+
 
     <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
         delete from sys_authority_url where id = #{id}

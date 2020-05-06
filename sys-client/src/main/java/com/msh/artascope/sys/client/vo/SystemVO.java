@@ -27,8 +27,6 @@ public class SystemVO extends SystemPO {
 		this.setStatus(systemPO.getStatus());
 		this.setOperatorId(systemPO.getOperatorId());
 		this.setUpdateVersion(systemPO.getUpdateVersion());
-		this.setCreateTime(systemPO.getCreateTime());
-		this.setUpdateTime(systemPO.getUpdateTime());
 	}
 }
 

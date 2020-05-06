@@ -40,8 +40,6 @@ public class AuthorityVO extends AuthorityPO {
 		this.setIcon(authorityPO.getIcon());
 		this.setStatus(authorityPO.getStatus());
 		this.setUpdateVersion(authorityPO.getUpdateVersion());
-		this.setCreateTime(authorityPO.getCreateTime());
-		this.setUpdateTime(authorityPO.getUpdateTime());
 	}
 }
 

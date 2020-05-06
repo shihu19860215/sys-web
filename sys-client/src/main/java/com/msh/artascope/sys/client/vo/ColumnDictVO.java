@@ -28,8 +28,6 @@ public class ColumnDictVO extends ColumnDictPO {
 		this.setMeaning(columnDictPO.getMeaning());
 		this.setStatus(columnDictPO.getStatus());
 		this.setUpdateVersion(columnDictPO.getUpdateVersion());
-		this.setCreateTime(columnDictPO.getCreateTime());
-		this.setUpdateTime(columnDictPO.getUpdateTime());
 	}
 }
 

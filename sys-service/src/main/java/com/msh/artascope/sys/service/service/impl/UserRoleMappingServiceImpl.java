@@ -37,9 +37,6 @@ public class UserRoleMappingServiceImpl extends BaseServiceImpl<UserRoleMappingP
 
     @Override
     public CommonResult<List<UserRoleMappingPO>> list(UserRoleMappingQO param) {
-        if(null == param.getStatus()){
-            param.setEgtStatus(0);
-        }
         return super.list(param);
     }
 

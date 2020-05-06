@@ -25,12 +25,9 @@ public class RoleAuthorityMappingVO extends RoleAuthorityMappingPO {
 		this.setId(roleAuthorityMappingPO.getId());
 		this.setRoleId(roleAuthorityMappingPO.getRoleId());
 		this.setAuthorityId(roleAuthorityMappingPO.getAuthorityId());
-		this.setStatus(roleAuthorityMappingPO.getStatus());
 		this.setTenantId(roleAuthorityMappingPO.getTenantId());
 		this.setOperatorId(roleAuthorityMappingPO.getOperatorId());
-		this.setUpdateVersion(roleAuthorityMappingPO.getUpdateVersion());
 		this.setCreateTime(roleAuthorityMappingPO.getCreateTime());
-		this.setUpdateTime(roleAuthorityMappingPO.getUpdateTime());
 	}
 }
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msh.artascope.sys.service.dao.ColumnInfoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.msh.artascope.sys.client.po.ColumnInfoPO" id="columnInfoMap">
+        <result property="id" column="id"/>
+        <result property="tableName" column="table_name"/>
+        <result property="columnName" column="column_name"/>
+        <result property="title" column="title"/>
+        <result property="status" column="status"/>
+        <result property="updateVersion" column="update_version"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,table_name,column_name,title,status,update_version,create_time,update_time
+    </sql>
+
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="tableName != null">AND table_name = #{tableName}</if>
+            <if test="columnName != null">AND column_name = #{columnName}</if>
+            <if test="title != null">AND title = #{title}</if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
+        </trim>
+    </sql>
+
+    <select id="get" resultMap="columnInfoMap" parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_column_info where id = #{id}
+    </select>
+
+    <select id="list" resultMap="columnInfoMap"
+            parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_column_info
+        <include refid="base_where"/>
+        <if test="sortBy != null and sortBy.length != 0" >
+            <trim prefix="ORDER BY" suffixOverrides=",">
+                <foreach collection="sortBy" item="item" index="index" separator=",">
+                    ${item.sortColumn} ${item.sortMode}
+                </foreach>
+            </trim>
+        </if>
+        limit #{firstRow},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
+        select count(id) from sys_column_info
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="insert" parameterType="com.msh.artascope.sys.client.po.ColumnInfoPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_column_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tableName != null">table_name,</if>
+            <if test="columnName != null">column_name,</if>
+            <if test="title != null">title,</if>
+            <if test="status != null">status,</if>
+            update_version,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tableName != null">#{tableName},</if>
+            <if test="columnName != null">#{columnName},</if>
+            <if test="title != null">#{title},</if>
+            <if test="status != null">#{status},</if>
+            1,
+        </trim>
+    </insert>
+
+    <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.ColumnInfoPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_column_info
+        (id,table_name,column_name,title,status,update_version)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id},#{item.tableName},#{item.columnName},#{item.title},#{item.status},1)
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.msh.artascope.sys.client.po.ColumnInfoPO">
+        update sys_column_info
+        <set>
+            <if test="tableName != null">
+                table_name = #{tableName},
+            </if>
+            <if test="columnName != null">
+                column_name = #{columnName},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+             update_version = update_version+1,
+        </set>
+        where id = #{id}
+        and update_version = #{updateVersion}
+    </update>
+
+    <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
+        delete from sys_column_info where id = #{id}
+    </delete>
+    <delete id="logicDelete" parameterType="com.msh.artascope.sys.client.qo.ColumnInfoQO">
+        update sys_column_info set status = -1 where id = #{id}
+    </delete>
+</mapper>

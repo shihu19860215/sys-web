@@ -26,7 +26,5 @@ logging:
     root: info
     com:
       msh: info
-      shihu: 
-        artascope: 
-          sys: 
-            sys: debug
+      msh.artascope:
+        sys: debug

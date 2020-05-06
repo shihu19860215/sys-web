@@ -25,11 +25,8 @@ public class TenantSystemMappingVO extends TenantSystemMappingPO {
 		this.setId(tenantSystemMappingPO.getId());
 		this.setTenantId(tenantSystemMappingPO.getTenantId());
 		this.setSystemId(tenantSystemMappingPO.getSystemId());
-		this.setStatus(tenantSystemMappingPO.getStatus());
 		this.setOperatorId(tenantSystemMappingPO.getOperatorId());
-		this.setUpdateVersion(tenantSystemMappingPO.getUpdateVersion());
 		this.setCreateTime(tenantSystemMappingPO.getCreateTime());
-		this.setUpdateTime(tenantSystemMappingPO.getUpdateTime());
 	}
 }
 

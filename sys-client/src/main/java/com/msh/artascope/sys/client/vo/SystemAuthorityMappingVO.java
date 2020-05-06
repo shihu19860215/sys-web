@@ -25,11 +25,6 @@ public class SystemAuthorityMappingVO extends SystemAuthorityMappingPO {
 		this.setId(systemAuthorityMappingPO.getId());
 		this.setSystemId(systemAuthorityMappingPO.getSystemId());
 		this.setAuthorityId(systemAuthorityMappingPO.getAuthorityId());
-		this.setStatus(systemAuthorityMappingPO.getStatus());
-		this.setOperatorId(systemAuthorityMappingPO.getOperatorId());
-		this.setUpdateVersion(systemAuthorityMappingPO.getUpdateVersion());
-		this.setCreateTime(systemAuthorityMappingPO.getCreateTime());
-		this.setUpdateTime(systemAuthorityMappingPO.getUpdateTime());
 	}
 }
 

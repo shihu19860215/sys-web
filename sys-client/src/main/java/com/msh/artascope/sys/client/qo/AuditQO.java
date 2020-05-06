@@ -1,8 +1,6 @@
 package com.msh.artascope.sys.client.qo;
 
-import java.util.Date;
 import com.msh.frame.client.base.BaseQO;
-import com.msh.frame.client.validation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +12,7 @@ import javax.validation.constraints.NotNull;
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 16:54:59
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,10 +20,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel("审计列表QO")
 public class AuditQO extends BaseQO {
 	@ApiModelProperty("类名")
-	private String className;
-
-	@ApiModelProperty("字段名")
-	private String fieldName;
+	private String tableName;
 
 	@ApiModelProperty("主键id")
 	private Long primaryKeyId;
@@ -38,6 +33,9 @@ public class AuditQO extends BaseQO {
 
 	@ApiModelProperty("备注")
 	private String comment;
+
+	@ApiModelProperty("状态")
+	private Integer status;
 
     @NotNull(message = "tenantId不能为空")
 	@ApiModelProperty("租户id")

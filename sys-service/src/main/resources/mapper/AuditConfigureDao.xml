@@ -73,7 +73,7 @@
             <if test="status != null">status,</if>
             <if test="tenantId != null">tenant_id,</if>
             <if test="operatorId != null">operator_id,</if>
-            update_version,
+            <if test="updateVersion != null">update_version,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -83,7 +83,7 @@
             <if test="status != null">#{status},</if>
             <if test="tenantId != null">#{tenantId},</if>
             <if test="operatorId != null">#{operatorId},</if>
-            1,
+            <if test="updateVersion != null">#{updateVersion},</if>
         </trim>
     </insert>
 
@@ -92,7 +92,7 @@
         (id,class_name,field_name,meaning,status,tenant_id,operator_id,update_version)
         values
         <foreach collection="list" index="index" separator="," item="item">
-            (#{item.id},#{item.className},#{item.fieldName},#{item.meaning},#{item.status},#{item.tenantId},#{item.operatorId},1)
+            (#{item.id},#{item.className},#{item.fieldName},#{item.meaning},#{item.status},#{item.tenantId},#{item.operatorId},#{item.updateVersion})
         </foreach>
     </insert>
 
@@ -119,10 +119,10 @@
             </if>
              update_version = update_version+1,
         </set>
-        where id = #{id}
-        and update_version = #{updateVersion}
+        where id = #{id} and update_version = #{updateVersion}
         <if test="tenantId != null">AND tenant_id = #{tenantId}</if>
     </update>
+
 
     <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.AuditConfigureQO">
         delete from sys_audit_configure where id = #{id}

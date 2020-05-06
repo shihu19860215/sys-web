@@ -25,12 +25,9 @@ public class UserSystemMappingVO extends UserSystemMappingPO {
 		this.setId(userSystemMappingPO.getId());
 		this.setUserId(userSystemMappingPO.getUserId());
 		this.setSystemId(userSystemMappingPO.getSystemId());
-		this.setStatus(userSystemMappingPO.getStatus());
 		this.setTenantId(userSystemMappingPO.getTenantId());
 		this.setOperatorId(userSystemMappingPO.getOperatorId());
-		this.setUpdateVersion(userSystemMappingPO.getUpdateVersion());
 		this.setCreateTime(userSystemMappingPO.getCreateTime());
-		this.setUpdateTime(userSystemMappingPO.getUpdateTime());
 	}
 }
 

@@ -1,24 +1,22 @@
 package com.msh.artascope.sys.client.po;
 
 
-import java.util.Date;
 import com.msh.frame.client.base.BasePO;
-import com.msh.frame.client.validation.*;
+import com.msh.frame.client.validation.IInsert;
+import com.msh.frame.client.validation.IUpdate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 17:20:08
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -47,6 +45,8 @@ public class UserRoleMappingPO extends BasePO{
 	})
 	@ApiModelProperty("操作人")
 	private Long operatorId;
+
+	private Date createTime;
 
 
 }

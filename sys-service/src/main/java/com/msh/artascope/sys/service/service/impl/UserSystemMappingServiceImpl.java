@@ -1,6 +1,11 @@
 package com.msh.artascope.sys.service.service.impl;;
 
+import com.msh.artascope.like.client.po.CharIndexPO;
+import com.msh.artascope.sys.client.po.UserPO;
+import com.msh.artascope.sys.client.qo.UserQO;
+import com.msh.artascope.sys.service.client.LikeClient;
 import com.msh.artascope.sys.service.dao.UserSystemMappingDao;
+import com.msh.artascope.sys.service.service.UserService;
 import com.msh.artascope.sys.service.service.UserSystemMappingService;
 import com.msh.frame.client.base.BaseServiceImpl;
 import com.msh.frame.interfaces.IdGenerateable;
@@ -12,6 +17,7 @@ import com.msh.frame.client.common.CommonCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -30,6 +36,12 @@ public class UserSystemMappingServiceImpl extends BaseServiceImpl<UserSystemMapp
     @Autowired
     private IdGenerateable idGenerateable;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private LikeClient likeClient;
+
     @Override
     public CommonResult update(UserSystemMappingPO param) {
         return super.update(param);
@@ -37,21 +49,50 @@ public class UserSystemMappingServiceImpl extends BaseServiceImpl<UserSystemMapp
 
     @Override
     public CommonResult<List<UserSystemMappingPO>> list(UserSystemMappingQO param) {
-        if(null == param.getStatus()){
-            param.setEgtStatus(0);
-        }
         return super.list(param);
     }
 
     @Override
     public CommonResult insert(UserSystemMappingPO param) {
         param.setId(idGenerateable.getUniqueID());
+        UserQO userQO = new UserQO();
+        userQO.setId(param.getUserId());
+        userQO.setTenantId(param.getTenantId());
+        UserPO userPO = userService.get(userQO).getResult();
+        if(null != userPO){
+            CharIndexPO charIndexPO = new CharIndexPO();
+            charIndexPO.setSystemId(param.getSystemId());
+            charIndexPO.setTenantId(param.getTenantId());
+            charIndexPO.setPrimaryKeyId(param.getUserId());
+            charIndexPO.setColumnId(3L);
+            charIndexPO.setFullChar(userPO.getUsername());
+            likeClient.insert(charIndexPO);
+        }
         return super.insert(param);
     }
 
     @Override
     public CommonResult insertCollection(Collection<UserSystemMappingPO> param) {
-        param.stream().forEach(p->p.setId(idGenerateable.getUniqueID()));
+        List<CharIndexPO> charIndexPOList = new LinkedList<>();
+        param.stream().forEach(p->{
+            p.setId(idGenerateable.getUniqueID());
+            UserQO userQO = new UserQO();
+            userQO.setId(p.getId());
+            userQO.setTenantId(p.getTenantId());
+            UserPO userPO = userService.get(userQO).getResult();
+            if(null != userPO){
+                CharIndexPO charIndexPO = new CharIndexPO();
+                charIndexPO.setSystemId(p.getSystemId());
+                charIndexPO.setTenantId(p.getTenantId());
+                charIndexPO.setPrimaryKeyId(p.getUserId());
+                charIndexPO.setColumnId(3L);
+                charIndexPO.setFullChar(userPO.getUsername());
+                charIndexPOList.add(charIndexPO);
+            }
+        });
+        if(!CollectionUtils.isEmpty(charIndexPOList)){
+            likeClient.insertCollection(charIndexPOList);
+        }
         return super.insertCollection(param);
     }
 

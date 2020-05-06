@@ -37,9 +37,6 @@ public class SystemAuthorityMappingServiceImpl extends BaseServiceImpl<SystemAut
 
     @Override
     public CommonResult<List<SystemAuthorityMappingPO>> list(SystemAuthorityMappingQO param) {
-        if(null == param.getStatus()){
-            param.setEgtStatus(0);
-        }
         return super.list(param);
     }
 

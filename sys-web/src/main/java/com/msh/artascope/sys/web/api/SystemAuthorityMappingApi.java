@@ -38,8 +38,6 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
     @ApiOperation(value = "通用插入逻辑", httpMethod = "POST", notes = "通用插入逻辑")
     @PostMapping("insert")
     public CommonResult insert(@Validated({IInsert.class,Default.class}) @RequestBody SystemAuthorityMappingPO p) {
-        Long userId = HttpServletRequestUtil.getUserId();
-        p.setOperatorId(userId);
         return systemAuthorityMappingService.insert(p);
     }
 
@@ -56,16 +54,12 @@ public class SystemAuthorityMappingApi extends BaseController<SystemAuthorityMap
     public CommonResult logicDelete(@RequestParam("id") Long id) {
         SystemAuthorityMappingQO q = new SystemAuthorityMappingQO();
         q.setId(id);
-        Long userId = HttpServletRequestUtil.getUserId();
-        q.setOperatorId(userId);
         return systemAuthorityMappingService.logicDelete(q);
     }
 
     @ApiOperation(value = "通用更新逻辑", httpMethod = "POST", notes = "通用更新逻辑")
     @PostMapping("update")
     public CommonResult update(@Validated({IUpdate.class,Default.class}) @RequestBody SystemAuthorityMappingPO p) {
-        Long userId = HttpServletRequestUtil.getUserId();
-        p.setOperatorId(userId);
         return systemAuthorityMappingService.update(p);
     }
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msh.artascope.sys.service.dao.AuthorityUrlDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.msh.artascope.sys.client.po.AuthorityUrlPO" id="authorityUrlMap">
+        <result property="id" column="id"/>
+        <result property="authorityId" column="authority_id"/>
+        <result property="url" column="url"/>
+        <result property="linkAuth" column="link_auth"/>
+        <result property="status" column="status"/>
+        <result property="updateVersion" column="update_version"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,authority_id,url,link_auth,status,update_version,create_time,update_time
+    </sql>
+
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="authorityId != null">AND authority_id = #{authorityId}</if>
+            <if test="url != null">AND url = #{url}</if>
+            <if test="linkAuth != null">AND link_auth = #{linkAuth}</if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
+        </trim>
+    </sql>
+
+    <select id="get" resultMap="authorityUrlMap" parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_authority_url where id = #{id}
+    </select>
+
+    <select id="list" resultMap="authorityUrlMap"
+            parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_authority_url
+        <include refid="base_where"/>
+        <if test="sortBy != null and sortBy.length != 0" >
+            <trim prefix="ORDER BY" suffixOverrides=",">
+                <foreach collection="sortBy" item="item" index="index" separator=",">
+                    ${item.sortColumn} ${item.sortMode}
+                </foreach>
+            </trim>
+        </if>
+        limit #{firstRow},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
+        select count(id) from sys_authority_url
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="insert" parameterType="com.msh.artascope.sys.client.po.AuthorityUrlPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_authority_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="authorityId != null">authority_id,</if>
+            <if test="url != null">url,</if>
+            <if test="linkAuth != null">link_auth,</if>
+            <if test="status != null">status,</if>
+            update_version,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="authorityId != null">#{authorityId},</if>
+            <if test="url != null">#{url},</if>
+            <if test="linkAuth != null">#{linkAuth},</if>
+            <if test="status != null">#{status},</if>
+            1,
+        </trim>
+    </insert>
+
+    <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.AuthorityUrlPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_authority_url
+        (id,authority_id,url,link_auth,status,update_version)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id},#{item.authorityId},#{item.url},#{item.linkAuth},#{item.status},1)
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.msh.artascope.sys.client.po.AuthorityUrlPO">
+        update sys_authority_url
+        <set>
+            <if test="authorityId != null">
+                authority_id = #{authorityId},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="linkAuth != null">
+                link_auth = #{linkAuth},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+             update_version = update_version+1,
+        </set>
+        where id = #{id}
+        and update_version = #{updateVersion}
+    </update>
+
+    <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
+        delete from sys_authority_url where id = #{id}
+    </delete>
+    <delete id="logicDelete" parameterType="com.msh.artascope.sys.client.qo.AuthorityUrlQO">
+        update sys_authority_url set status = -1 where id = #{id}
+    </delete>
+</mapper>

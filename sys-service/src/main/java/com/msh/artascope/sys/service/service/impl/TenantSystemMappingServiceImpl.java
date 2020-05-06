@@ -37,9 +37,6 @@ public class TenantSystemMappingServiceImpl extends BaseServiceImpl<TenantSystem
 
     @Override
     public CommonResult<List<TenantSystemMappingPO>> list(TenantSystemMappingQO param) {
-        if(null == param.getStatus()){
-            param.setEgtStatus(0);
-        }
         return super.list(param);
     }
 

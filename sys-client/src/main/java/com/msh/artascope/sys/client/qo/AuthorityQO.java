@@ -1,22 +1,18 @@
 package com.msh.artascope.sys.client.qo;
 
-import java.util.Date;
-import java.util.Set;
-
 import com.msh.frame.client.base.BaseQO;
-import com.msh.frame.client.validation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 16:54:59
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -35,7 +31,7 @@ public class AuthorityQO extends BaseQO {
 	@ApiModelProperty("层级")
 	private Integer layer;
 
-	@ApiModelProperty("类型")
+	@ApiModelProperty("权限类型")
 	private Integer type;
 
 	@ApiModelProperty("排序值")
@@ -44,9 +40,13 @@ public class AuthorityQO extends BaseQO {
 	@ApiModelProperty("图标")
 	private String icon;
 
+	@ApiModelProperty("状态")
+	private Integer status;
+
     @ApiModelProperty("大于等于status")
     private Integer egtStatus;
 
 	@ApiModelProperty("in查询")
-	private Set<Long> inIds;
+	private Collection<Long> inIds;
+
 }

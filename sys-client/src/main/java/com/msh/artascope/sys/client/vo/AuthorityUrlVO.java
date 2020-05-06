@@ -28,8 +28,6 @@ public class AuthorityUrlVO extends AuthorityUrlPO {
 		this.setLinkAuth(authorityUrlPO.getLinkAuth());
 		this.setStatus(authorityUrlPO.getStatus());
 		this.setUpdateVersion(authorityUrlPO.getUpdateVersion());
-		this.setCreateTime(authorityUrlPO.getCreateTime());
-		this.setUpdateTime(authorityUrlPO.getUpdateTime());
 	}
 }
 

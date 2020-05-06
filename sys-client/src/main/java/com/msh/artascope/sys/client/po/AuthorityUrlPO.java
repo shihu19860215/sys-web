@@ -1,24 +1,22 @@
 package com.msh.artascope.sys.client.po;
 
 
-import java.util.Date;
 import com.msh.frame.client.base.BasePO;
-import com.msh.frame.client.validation.*;
+import com.msh.frame.client.validation.IInsert;
+import com.msh.frame.client.validation.IUpdate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 16:54:59
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -38,8 +36,16 @@ public class AuthorityUrlPO extends BasePO{
 	private String url;
 
 	@NotNull(groups = IInsert.class,message = "linkAuth不能为空")
-	@ApiModelProperty("连接权限 1拥有权限可访问 2用户登录可访问 3无需登录可访问")
+	@ApiModelProperty("链接权限")
 	private Integer linkAuth;
+
+	@NotNull(groups = IInsert.class,message = "status不能为空")
+	@ApiModelProperty("状态")
+	private Integer status;
+
+	@NotNull(groups = IUpdate.class, message = "更新版本不能为空")
+	@ApiModelProperty("更新版本")
+	private Integer updateVersion;
 
 
 }

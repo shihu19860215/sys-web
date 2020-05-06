@@ -32,8 +32,6 @@ public class AreaVO extends AreaPO {
 		this.setCity(areaPO.getCity());
 		this.setArea(areaPO.getArea());
 		this.setStatus(areaPO.getStatus());
-		this.setCreateTime(areaPO.getCreateTime());
-		this.setUpdateTime(areaPO.getUpdateTime());
 	}
 }
 

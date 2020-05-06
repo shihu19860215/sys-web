@@ -72,7 +72,7 @@
             <if test="tenantStartTime != null">tenant_start_time,</if>
             <if test="tenantEndTime != null">tenant_end_time,</if>
             <if test="operatorId != null">operator_id,</if>
-            update_version,
+            <if test="updateVersion != null">update_version,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -82,7 +82,7 @@
             <if test="tenantStartTime != null">#{tenantStartTime},</if>
             <if test="tenantEndTime != null">#{tenantEndTime},</if>
             <if test="operatorId != null">#{operatorId},</if>
-            1,
+            <if test="updateVersion != null">#{updateVersion},</if>
         </trim>
     </insert>
 
@@ -91,7 +91,7 @@
         (id,name,primary_user_id,status,tenant_start_time,tenant_end_time,operator_id,update_version)
         values
         <foreach collection="list" index="index" separator="," item="item">
-            (#{item.id},#{item.name},#{item.primaryUserId},#{item.status},#{item.tenantStartTime},#{item.tenantEndTime},#{item.operatorId},1)
+            (#{item.id},#{item.name},#{item.primaryUserId},#{item.status},#{item.tenantStartTime},#{item.tenantEndTime},#{item.operatorId},#{item.updateVersion})
         </foreach>
     </insert>
 
@@ -118,9 +118,9 @@
             </if>
              update_version = update_version+1,
         </set>
-        where id = #{id}
-        and update_version = #{updateVersion}
+        where id = #{id} and update_version = #{updateVersion}
     </update>
+
 
     <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.TenantQO">
         delete from sys_tenant where id = #{id}

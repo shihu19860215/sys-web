@@ -25,13 +25,9 @@ public class UserRoleMappingVO extends UserRoleMappingPO {
 		this.setId(userRoleMappingPO.getId());
 		this.setUserId(userRoleMappingPO.getUserId());
 		this.setRoleId(userRoleMappingPO.getRoleId());
-		this.setSystemId(userRoleMappingPO.getSystemId());
-		this.setStatus(userRoleMappingPO.getStatus());
 		this.setTenantId(userRoleMappingPO.getTenantId());
 		this.setOperatorId(userRoleMappingPO.getOperatorId());
-		this.setUpdateVersion(userRoleMappingPO.getUpdateVersion());
 		this.setCreateTime(userRoleMappingPO.getCreateTime());
-		this.setUpdateTime(userRoleMappingPO.getUpdateTime());
 	}
 }
 

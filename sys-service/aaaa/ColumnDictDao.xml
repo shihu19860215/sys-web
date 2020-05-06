@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msh.artascope.sys.service.dao.ColumnDictDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.msh.artascope.sys.client.po.ColumnDictPO" id="columnDictMap">
+        <result property="id" column="id"/>
+        <result property="columnId" column="column_id"/>
+        <result property="value" column="value"/>
+        <result property="meaning" column="meaning"/>
+        <result property="status" column="status"/>
+        <result property="updateVersion" column="update_version"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,column_id,value,meaning,status,update_version,create_time,update_time
+    </sql>
+
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="columnId != null">AND column_id = #{columnId}</if>
+            <if test="value != null">AND value = #{value}</if>
+            <if test="meaning != null">AND meaning = #{meaning}</if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="egtStatus != null">AND status &gt;= #{egtStatus}</if>
+        </trim>
+    </sql>
+
+    <select id="get" resultMap="columnDictMap" parameterType="com.msh.artascope.sys.client.qo.ColumnDictQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_column_dict where id = #{id}
+    </select>
+
+    <select id="list" resultMap="columnDictMap"
+            parameterType="com.msh.artascope.sys.client.qo.ColumnDictQO">
+        select
+        <include refid="base_column_list"/>
+        from sys_column_dict
+        <include refid="base_where"/>
+        <if test="sortBy != null and sortBy.length != 0" >
+            <trim prefix="ORDER BY" suffixOverrides=",">
+                <foreach collection="sortBy" item="item" index="index" separator=",">
+                    ${item.sortColumn} ${item.sortMode}
+                </foreach>
+            </trim>
+        </if>
+        limit #{firstRow},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.msh.artascope.sys.client.qo.ColumnDictQO">
+        select count(id) from sys_column_dict
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="insert" parameterType="com.msh.artascope.sys.client.po.ColumnDictPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_column_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="columnId != null">column_id,</if>
+            <if test="value != null">value,</if>
+            <if test="meaning != null">meaning,</if>
+            <if test="status != null">status,</if>
+            update_version,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="columnId != null">#{columnId},</if>
+            <if test="value != null">#{value},</if>
+            <if test="meaning != null">#{meaning},</if>
+            <if test="status != null">#{status},</if>
+            1,
+        </trim>
+    </insert>
+
+    <insert id="insertCollection" parameterType="com.msh.artascope.sys.client.po.ColumnDictPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_column_dict
+        (id,column_id,value,meaning,status,update_version)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id},#{item.columnId},#{item.value},#{item.meaning},#{item.status},1)
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.msh.artascope.sys.client.po.ColumnDictPO">
+        update sys_column_dict
+        <set>
+            <if test="columnId != null">
+                column_id = #{columnId},
+            </if>
+            <if test="value != null">
+                value = #{value},
+            </if>
+            <if test="meaning != null">
+                meaning = #{meaning},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+             update_version = update_version+1,
+        </set>
+        where id = #{id}
+        and update_version = #{updateVersion}
+    </update>
+
+    <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.ColumnDictQO">
+        delete from sys_column_dict where id = #{id}
+    </delete>
+    <delete id="logicDelete" parameterType="com.msh.artascope.sys.client.qo.ColumnDictQO">
+        update sys_column_dict set status = -1 where id = #{id}
+    </delete>
+</mapper>

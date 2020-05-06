@@ -15,12 +15,10 @@
         <result property="city" column="city"/>
         <result property="area" column="area"/>
         <result property="status" column="status"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="base_column_list">
-        id,simple_code,simple_addr,full_addr,layer,parent_code,province,city,area,status,create_time,update_time
+        id,simple_code,simple_addr,full_addr,layer,parent_code,province,city,area,status
     </sql>
 
 
@@ -104,39 +102,7 @@
         </foreach>
     </insert>
 
-    <update id="update" parameterType="com.msh.artascope.sys.client.po.AreaPO">
-        update sys_area
-        <set>
-            <if test="simpleCode != null">
-                simple_code = #{simpleCode},
-            </if>
-            <if test="simpleAddr != null">
-                simple_addr = #{simpleAddr},
-            </if>
-            <if test="fullAddr != null">
-                full_addr = #{fullAddr},
-            </if>
-            <if test="layer != null">
-                layer = #{layer},
-            </if>
-            <if test="parentCode != null">
-                parent_code = #{parentCode},
-            </if>
-            <if test="province != null">
-                province = #{province},
-            </if>
-            <if test="city != null">
-                city = #{city},
-            </if>
-            <if test="area != null">
-                area = #{area},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
+
 
     <delete id="delete" parameterType="com.msh.artascope.sys.client.qo.AreaQO">
         delete from sys_area where id = #{id}

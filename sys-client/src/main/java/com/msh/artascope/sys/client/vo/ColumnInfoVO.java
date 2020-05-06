@@ -32,9 +32,6 @@ public class ColumnInfoVO extends ColumnInfoPO {
 		this.setColumnName(columnInfoPO.getColumnName());
 		this.setTitle(columnInfoPO.getTitle());
 		this.setStatus(columnInfoPO.getStatus());
-		this.setUpdateVersion(columnInfoPO.getUpdateVersion());
-		this.setCreateTime(columnInfoPO.getCreateTime());
-		this.setUpdateTime(columnInfoPO.getUpdateTime());
 	}
 }
 

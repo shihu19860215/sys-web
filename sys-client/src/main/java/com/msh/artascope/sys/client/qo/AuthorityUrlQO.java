@@ -1,22 +1,18 @@
 package com.msh.artascope.sys.client.qo;
 
-import java.util.Date;
-import java.util.Set;
-
 import com.msh.frame.client.base.BaseQO;
-import com.msh.frame.client.validation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 16:54:59
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,12 +25,16 @@ public class AuthorityUrlQO extends BaseQO {
 	@ApiModelProperty("请求url")
 	private String url;
 
-	@ApiModelProperty("连接权限 1拥有权限可访问 2用户登录可访问 3无需登录可访问")
+	@ApiModelProperty("链接权限")
 	private Integer linkAuth;
+
+	@ApiModelProperty("状态")
+	private Integer status;
 
     @ApiModelProperty("大于等于status")
     private Integer egtStatus;
 
 	@ApiModelProperty("in查询")
-	private Set<Long> inAuthIds;
+	private Collection<Long> inAuthIds;
+
 }

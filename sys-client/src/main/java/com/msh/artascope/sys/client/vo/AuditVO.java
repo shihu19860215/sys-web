@@ -1,10 +1,7 @@
 package com.msh.artascope.sys.client.vo;
 
 import com.msh.artascope.sys.client.po.AuditPO;
-import java.util.Date;
-import com.msh.frame.client.base.BaseQO;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -12,7 +9,7 @@ import lombok.ToString;
 /**
  * @author shihu
  * @email m-sh@qq.com
- * @date 2020-01-09 17:21:47
+ * @date 2020-01-16 16:54:59
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,8 +20,7 @@ public class AuditVO extends AuditPO {
 	public AuditVO(){}
 	public AuditVO(AuditPO auditPO){
 		this.setId(auditPO.getId());
-		this.setClassName(auditPO.getClassName());
-		this.setFieldName(auditPO.getFieldName());
+		this.setTableName(auditPO.getTableName());
 		this.setPrimaryKeyId(auditPO.getPrimaryKeyId());
 		this.setBeforeValue(auditPO.getBeforeValue());
 		this.setAfterValue(auditPO.getAfterValue());
@@ -32,9 +28,7 @@ public class AuditVO extends AuditPO {
 		this.setStatus(auditPO.getStatus());
 		this.setTenantId(auditPO.getTenantId());
 		this.setOperatorId(auditPO.getOperatorId());
-		this.setUpdateVersion(auditPO.getUpdateVersion());
 		this.setCreateTime(auditPO.getCreateTime());
-		this.setUpdateTime(auditPO.getUpdateTime());
 	}
 }
 

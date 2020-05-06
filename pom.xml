@@ -22,6 +22,7 @@
 
     <properties>
         <sys.version>${project.version}</sys.version>
+        <like.version>${project.version}</like.version>
         <msh.frame.version>${parent.version}</msh.frame.version>
         <msh.starter.version>1.0.0-SNAPSHOT</msh.starter.version>
         <fastjson.version>1.2.47</fastjson.version>
@@ -56,6 +57,11 @@
                 <groupId>com.msh.artascope</groupId>
                 <artifactId>sys-service</artifactId>
                 <version>${sys.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.msh.artascope</groupId>
+                <artifactId>like-client</artifactId>
+                <version>${like.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.msh</groupId>
