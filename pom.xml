@@ -25,7 +25,7 @@
         <like.version>${project.version}</like.version>
         <msh.frame.version>${parent.version}</msh.frame.version>
         <msh.starter.version>1.0.0-SNAPSHOT</msh.starter.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <lombok.version>1.16.18</lombok.version>
         <servlet.version>4.0.0-b05</servlet.version>
         <mybatis.springboot.version>1.2.0</mybatis.springboot.version>
